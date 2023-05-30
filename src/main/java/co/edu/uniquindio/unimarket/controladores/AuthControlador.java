@@ -1,8 +1,11 @@
 package co.edu.uniquindio.unimarket.controladores;
 
 import co.edu.uniquindio.unimarket.dto.MensajeDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoDTO;
 import co.edu.uniquindio.unimarket.dto.SesionDTO;
 import co.edu.uniquindio.unimarket.dto.UsuarioDTO;
+import co.edu.uniquindio.unimarket.entidades.enumeraciones.Categoria;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.SesionServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,10 +14,11 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/auth")
@@ -33,12 +37,14 @@ public class AuthControlador {
 
     @Operation(summary = "Crear un nuevo usuario",
             description = "Se crea un usuario con la información especificada en el DTO.")
-    @PostMapping("/crear")
-    public ResponseEntity<MensajeDTO> crearUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception {
+    @PostMapping("/registro")
+    public ResponseEntity<MensajeDTO> CrearUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new MensajeDTO(
                         HttpStatus.CREATED,
                         false,
                         usuarioServicio.crearUsuario(usuarioDTO)));
     }
+
+
 }

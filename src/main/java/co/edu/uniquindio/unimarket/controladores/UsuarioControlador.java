@@ -19,6 +19,21 @@ public class UsuarioControlador {
 
     private final UsuarioServicio usuarioServicio;
 
+    @Operation(summary = "Registrar un nuevo usuario",
+            description = "Registra un nuevo usuario con la información especificada en el DTO.")
+    @PostMapping("/registrar")
+    public ResponseEntity<MensajeDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception {
+        usuarioServicio.crearUsuario(usuarioDTO);
+
+        // Ejemplo de respuesta exitosa
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new MensajeDTO(HttpStatus.CREATED, false, "Usuario registrado exitosamente"));
+
+        // Ejemplo de respuesta con error
+        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        //         new MensajeDTO(HttpStatus.BAD_REQUEST, true, "Error al registrar el usuario"));
+    }
+
     @Operation(summary = "Actualizar un usuario",
             description = "Se actualiza la información del usuario correspondiente al código o Id de usuario especificado.")
     @PutMapping("/actualizar/{idUsuario}/{contrasenia}")

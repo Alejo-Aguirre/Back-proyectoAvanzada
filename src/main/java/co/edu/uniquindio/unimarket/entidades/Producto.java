@@ -50,8 +50,10 @@ public class Producto implements Serializable {
     private List<Descuento> descuentos;
 
     @ElementCollection
+    @CollectionTable(name = "producto_imagen", joinColumns = @JoinColumn(name = "producto_id"))
+    @MapKeyColumn(name = "imagen_key")
+    @Column(name = "imagen")
     private Map<String, String> Imagen;
-
 
     @ElementCollection
     @Enumerated(EnumType.STRING)

@@ -24,7 +24,7 @@ public class ProductoControlador {
     @Operation(summary = "Crear un producto",
             description = "Se crea un nuevo producto con la información especificada.")
     @PostMapping("/crear")
-    public ResponseEntity<MensajeDTO> crearProducto(@Valid @RequestBody ProductoDTO productoDTO) throws Exception {
+    public ResponseEntity<MensajeDTO> crear(@Valid @RequestBody ProductoDTO productoDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new MensajeDTO(
                         HttpStatus.CREATED,
@@ -75,6 +75,18 @@ public class ProductoControlador {
                         false,
                         productoServicio.listarProductosUsuario(idUsuario)));
     }
+
+
+    @GetMapping("/listarproductos")
+    //se trae el metodo con sus parametros y se le hacen las anotaciones correspondientes
+    public ResponseEntity<MensajeDTO> listarProductos() throws Exception{
+        //Se llama el servicio para listar los productos y se retorna el body con la respuesta
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MensajeDTO(
+                HttpStatus.CREATED,
+                false,
+                productoServicio.listarProductos()));
+    }
+
 
     @Operation(summary = "Listar productos por categoria",
             description = "Se obtiene la información de los productos correspondientes a la categoría especificada.")

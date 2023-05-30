@@ -2,21 +2,14 @@ package co.edu.uniquindio.unimarket.entidades.enumeraciones;
 
 public enum Categoria {
 
-    ELECTRONICA,
-    HOGAR,
-    MODA,
-    DEPORTE,
-    JUGUETES,
-    LIBROS,
-    MUSICA,
-    VIDEOJUEGOS,
-    CELULARES,
-    COMPUTADORAS,
-    HERRAMIENTAS,
-    MUEBLES,
-    VEHICULOS,
+
     TECNOLOGIA,
-    OTROS
+    _CELULARES,
+    _COMPUTADORES,
+    VEHICULOS,
+    _CARROS,
+    _MOTOS,
+
 
 
 }

@@ -2,6 +2,7 @@ package co.edu.uniquindio.unimarket.dto;
 
 import co.edu.uniquindio.unimarket.entidades.enumeraciones.Categoria;
 import co.edu.uniquindio.unimarket.entidades.enumeraciones.EstadoProducto;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +32,8 @@ public class ProductoGetDTO {
 
     private int idUsuario;
 
-    private Map<String, String> imagenes;
+    @NotNull
+    private List<ImagenDTO> imagenes;
 
     private List<Categoria> categorias;
 

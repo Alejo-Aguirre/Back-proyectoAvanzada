@@ -84,6 +84,17 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         return usuario.get();
     }
 
+    public Usuario obtenerUsuarioPorId(int idPersona) throws CodigoInexistenteException {
+        Optional<Usuario> usuarioOptional = usuarioRepo.findById(idPersona);
+
+        if (usuarioOptional.isEmpty()) {
+            throw new CodigoInexistenteException("El código " + idPersona + " no está asociado a ningún usuario");
+        }
+
+        return usuarioOptional.get();
+    }
+
+
     private void validarContraseniaUsuario(int idUsuario, String contrasenia) throws Exception {
         Usuario usuario = obtener(idUsuario);
 

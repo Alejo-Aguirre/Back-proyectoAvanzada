@@ -24,22 +24,26 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.cors();
-        http.authorizeHttpRequests().anyRequest().permitAll();
 
-        /*
-        http.authorizeHttpRequests().requestMatchers(
+        http.authorizeRequests()
+                .requestMatchers(
                         "/doc/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/api/auth/**",
-                        "/api/cambiarContrasenia/**").permitAll()
+                        "/api/cambiarContrasenia/**",
+                        "/api/auth/registro",
+                        "/api/auth/registro",
+                        "/api/categorias/listar",
+                        "/api/producto/crear",
+                        "/api/producto/listarproductos",
+                        "/api/imagenes/subir").permitAll()
                 .requestMatchers(
                         "/api/productoModerador/**").hasAuthority("MODERADOR")
                 .requestMatchers(
                         "/api/usuario/**",
                         "/api/comentario/**",
                         "/api/producto/actualizar/**",
-                        "/api/producto/crear/**",
                         "/api/producto/obtener/**",
                         "/api/producto/listarUsuario/**",
                         "/api/producto/listarFavoritosUsuario/**",
@@ -55,14 +59,15 @@ public class WebSecurityConfig {
                         "/api/producto/listarPrecio/**",
                         "/api/producto/listarNombre/**",
                         "/api/comentario/listar/**",
-                        "/api/calificacion/promedio/**").permitAll().anyRequest().authenticated();
+                        "/api/calificacion/promedio/**").permitAll()
+                .anyRequest().authenticated();
 
-
-         */
         http.exceptionHandling().authenticationEntryPoint(jwtEntryPoint);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
+
 }

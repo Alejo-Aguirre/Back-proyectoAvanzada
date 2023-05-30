@@ -16,6 +16,8 @@ public interface ProductoRepo extends JpaRepository<Producto, Integer> {
     @Query("select p from Producto p where p.usuario.idPersona = :codigoUsuario")
     List<Producto> listarProductosUsuario(int codigoUsuario);
 
+    @Query("select p from Producto p")
+    List<Producto> listarProductos();
 
     // listar productos por nombre
     @Query("select p from Producto p where p.nombreProducto like concat( '%', :nombre, '%') and p.estadoProducto <> 'INACTIVO'")

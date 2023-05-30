@@ -1,5 +1,6 @@
 package co.edu.uniquindio.unimarket.servicios.implementacion;
 
+import co.edu.uniquindio.unimarket.dto.ImagenDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Producto;
@@ -281,7 +282,7 @@ public class ProductoServicioImpl implements ProductoServicio {
                 producto.getUnidadesDisponibles(),
                 producto.getPrecioActual(),
                 producto.getUsuario().getIdPersona(),
-                producto.getImagen(),
+                convertir(producto.getImagen()),
                 producto.getCategorias()
 
         );
@@ -295,8 +296,8 @@ public class ProductoServicioImpl implements ProductoServicio {
         producto.setDescripcionProducto(productoDTO.getDescripcionProducto());
         producto.setUnidadesDisponibles(productoDTO.getUnidadesDisponibles());
         producto.setPrecioActual(productoDTO.getPrecioActual());
-        producto.setUsuario(usuarioServicio.obtener(productoDTO.getIdPersona()));
-        producto.setImagen(productoDTO.getImagenes());
+        producto.setUsuario(usuarioServicio.obtenerUsuarioPorId(productoDTO.getIdPersona()));
+        producto.setImagen(convertir(productoDTO.getImagenes()));
         producto.setCategorias(productoDTO.getCategorias());
         producto.setEstadoProducto(EstadoProducto.SIN_REVISAR);
         producto.setFechaCreacion(LocalDateTime.now());
@@ -304,5 +305,49 @@ public class ProductoServicioImpl implements ProductoServicio {
 
         return producto;
     }
+
+    private Map<String, String> convertir(List<ImagenDTO> lista){
+        Map<String, String> resultado = new HashMap<>();
+
+        for (ImagenDTO imagenDTO : lista){
+            String clave = imagenDTO.getIdImagen();
+            String valor = imagenDTO.getUrl();
+            resultado.put(clave,valor);
+        }
+        return resultado;
+    }
+
+    private List<ImagenDTO> convertir(Map<String, String> map){
+        List<ImagenDTO> lista = new ArrayList<>();
+
+        for (Map.Entry<String, String> entry : map.entrySet()){
+            String clave = entry.getKey();
+            String valor = entry.getValue();
+
+            ImagenDTO imagenDTO = new ImagenDTO(clave, valor);
+            imagenDTO.setIdImagen(clave);
+            imagenDTO.setUrl(valor);
+
+            lista.add(imagenDTO);
+        }
+
+        return lista;
+    }
+
+
+    @Override
+    public List<ProductoGetDTO> listarProductos() throws Exception {
+
+        List<Producto> lista = productoRepo.listarProductos();
+        List<ProductoGetDTO> respuesta = new ArrayList<>();
+
+        for (Producto p : lista){
+            respuesta.add(convertir(p));
+        }
+
+        return respuesta;
+    }
+
+
 
 }
